@@ -1,0 +1,43 @@
+<%= form_for(@transaction) do |f| %>
+    <% if @transaction.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+          <ul>
+            <% @transaction.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <label for="date">Date</label>
+    <div class="input-group">
+      <%= f.text_field :date,required: true, class: 'form-control', id: 'date' %>
+    </div>
+
+    <label for="amount">Amount</label>
+    <div class="input-group">
+      <%= f.number_field :amount,required: true,number: true,min: 0, class: 'form-control', id: 'amount' %>
+    </div>
+    <label for="category">category</label>
+    <div class="input-group">
+      <%= f.select :category_id, current_user.categories.map { |category| [category.source, category.id] }, {prompt: 'Select'}, class: 'form-control', id: 'category_id',required: true %>
+    </div>
+    </br>
+
+    <div class="footer">
+      <button type="submit" class="btn btn-default">Submit</button>
+      <%= link_to 'Back', transactions_path, class: "btn btn-default" %>
+    </div>
+<% end %>
+
+
+<script type="text/javascript">
+    $(function(){
+        $('#date').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+    });
+</script>

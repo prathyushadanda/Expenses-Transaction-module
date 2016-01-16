@@ -1,0 +1,32 @@
+<%= form_for(@category,as: :category) do |f| %>
+  <% if @category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@catagory.errors.count, "error") %> prohibited this catagory from being saved:</h2>
+      <ul>
+      <% @category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <label for="source">Source</label>
+    <div class="input-group">
+      <%= f.text_field :source,required: true, class: 'form-control', id: 'source' %>
+    </div>
+
+    <label for="desc">Description</label>
+    <div class="input-group">
+      <%= f.text_area :description,requied: true, class: 'form-control', id: 'desc' %>
+    </div>
+
+    <label for="type">Type</label>
+    <div class="input-group">
+      <%= f.select :type,['Expense','Income'],{prompt: 'Select'},required: true, class: 'form-control', id: 'type' %>
+    </div>
+</br>
+    <div>
+      <button type="submit" class="btn btn-default">Submit</button>
+      <%= link_to 'Back', categories_path, class: "btn btn-default" %>
+    </div>
+<% end %>
