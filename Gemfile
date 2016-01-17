@@ -52,3 +52,6 @@ gem 'spreadsheet' # For Spreadsheets
 gem 'roo-xls'
 
 gem 'heroku'
+group :production do
+  gem "pg"   #heroku supports only pg db
+end
