@@ -3,7 +3,8 @@
       margin-left: 20px;
   }
 </style>
-<%= link_to 'New Transaction', new_transaction_path, class: "btn btn-default pull-right margin-left-20" %>
+<%= link_to 'New Income', "#{new_transaction_path}?type=Income", class: "btn btn-default pull-right margin-left-20" %>
+<%= link_to 'New Expense', "#{new_transaction_path}?type=Expense", class: "btn btn-default pull-right margin-left-20" %>
 <%= link_to 'Transaction Reports', expense_reports_transactions_path, class: "btn btn-default pull-right margin-left-20" %>
 <%= link_to 'Bank Statement', bank_statement_transactions_path, class: "btn btn-default pull-right" %>
 

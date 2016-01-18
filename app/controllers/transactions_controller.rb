@@ -6,21 +6,30 @@ class TransactionsController < ApplicationController
   end
 
   def new
+    @categories = current_user.categories.where(type: params[:type])
     @transaction = current_user.transactions.new
   end
 
-  def edit;
+  def edit
+    @categories = current_user.categories.where(type: @transaction.category.type)
   end
 
   def create
     @transaction = current_user.transactions.new(transaction_params)
-    @transaction.save
-    redirect_to transactions_path, notice: 'Transaction was successfully created.'
+    if @transaction.save
+      redirect_to transactions_path, notice: 'Transaction was successfully created.'
+    else
+      render :new
+    end
   end
 
   def update
-    @transaction.update_attributes(transaction_params)
-    redirect_to transactions_path, notice: 'Transaction was successfully updated.'
+
+    if @transaction.update_attributes(transaction_params)
+      redirect_to transactions_path, notice: 'Transaction was successfully updated.'
+    else
+      render :edit
+    end
   end
 
   def destroy

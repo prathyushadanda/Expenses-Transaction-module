@@ -6,6 +6,7 @@ class CategoriesController < ApplicationController
   def index
     @categories = current_user.categories
   end
+
   # GET /categories/1
   # GET /categories/1.json
   def show
@@ -23,16 +24,21 @@ class CategoriesController < ApplicationController
   # POST /categories
   # POST /categories.json
   def create
-    # render json: params
-    # return
     @category = current_user.categories.new(category_params)
-    @category.save
-    redirect_to categories_path, notice: 'Category was successfully created.'
+    if @category.save
+      redirect_to categories_path, notice: 'Category was successfully created.'
+    else
+      render :new
+    end
+
   end
 
   def update
-        @category.update_attributes(category_params)
-        redirect_to categories_path, notice: 'category was successfully updated.'
+    if @category.update_attributes(category_params)
+      redirect_to categories_path, notice: 'category was successfully updated.'
+    else
+      render :edit
+    end
   end
 
   # DELETE /categories/1
@@ -46,13 +52,13 @@ class CategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = current_user.categories.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = current_user.categories.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def category_params
-      params.require(:category).permit(:source, :description, :type)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def category_params
+    params.require(:category).permit(:source, :description, :type)
+  end
 end
